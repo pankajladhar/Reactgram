@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -c -w setup.js test/**/*-test.js",
+    "test": "mocha setup.js test/**/*-test.js && exit 0",
+    "test-watch": "mocha -w setup.js test/**/*-test.js && exit 0",
     "build": "webpack",
     "watch": "webpack --watch",
     "start": "http-server ./app -a localhost -p 2000 -c-1",
