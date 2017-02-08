@@ -72,7 +72,7 @@ describe("<Photo />", () =>{
         expect(anchor.props().to).to.equal(`/view/${post.code}`);
 
         const imgTag = anchor.childAt(0);
-        expect(imgTag.html()).to.equal('<img src="../images/12552326_495932673919321_1443393332_n.jpg" alt="Lunch #hamont" class="grid-photo">')
+        expect(imgTag.html()).to.equal('<img src="images/12552326_495932673919321_1443393332_n.jpg" alt="Lunch #hamont" class="grid-photo">')
     });
 
     it("should render caption and control button under figcaption tag", () =>{
