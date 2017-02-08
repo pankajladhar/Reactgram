@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class Brand extends React.Component{
 
@@ -9,7 +10,7 @@ class Brand extends React.Component{
     render(){
         return(
             <h1 className="brand">
-                <a href="/app">Reactgram</a>
+                <Link to="/">Reactgram</Link>
             </h1>
         )
     }

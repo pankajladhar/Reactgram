@@ -20,7 +20,7 @@ audio:not([controls]) {
   display: none;
   height: 0;
 }
-[hidden] {
+input[type="submit"] {
   display: none;
 }
 html {
