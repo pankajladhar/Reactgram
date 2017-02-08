@@ -11,38 +11,35 @@ class App extends React.Component{
         this.removeComment = this.removeComment.bind(this);
         this.addComment = this.addComment.bind(this);
         this.state = {
-            postsObj : {
-                posts: posts,
-                likeBtnHandler : this.likeBtnHandler
-            },
-            commentsObj:{
-                comments : commentsData || {},
-                addComment : this.addComment,
-                removeComment : this.removeComment
-            }
+            posts : posts,
+            comments : commentsData
+        }
+        this.handlers = {
+            likeBtnHandler : this.likeBtnHandler,
+            addComment : this.addComment,
+            removeComment : this.removeComment
         }
     };
 
     removeComment(commentToRemoved, postId){
-        console.log("inside [removeComment] method");
-        var relatedPosts = this.state.commentsObj.comments[postId];
+        var relatedPosts = this.state.comments[postId];
         let commentsUpdated = [
             ...relatedPosts.slice(0, commentToRemoved),
             ...relatedPosts.slice(commentToRemoved+ 1)
         ];
 
         this.setState({
-            commentsObj: Object.assign({}, this.state.commentsObj, {
-                comments: {
+            comments: Object.assign({},
+                {
                     [postId]: commentsUpdated
                 }
-            })
+            )
         });
 
     };
 
     addComment(author, comment, postId){
-        var relatedComments = this.state.commentsObj.comments[postId] || [];
+        var relatedComments = this.state.comments[postId] || [];
 
         let newState = [...relatedComments, {
             user: author,
@@ -50,24 +47,23 @@ class App extends React.Component{
         }];
 
         this.setState({
-            commentsObj: Object.assign({}, this.state.commentsObj, {
-                comments: {
+            comments: Object.assign({},
+                {
                     [postId]: newState
                 }
-            })
+            )
         });
     };
 
     likeBtnHandler(val){
-        let newState = this.state.postsObj.posts.map((post) => {
+        let newState = this.state.posts.map((post) => {
             if (post.code == val.code) {
                 post.likes = post.likes + 1;
             }
             return post;
-
         });
         this.setState({
-            postObj: Object.assign({}, ...this.state.postsObj, { posts: newState})
+            posts: Object.assign([], newState)
         })
 
     };
@@ -78,8 +74,9 @@ class App extends React.Component{
             <div>
                 <Brand />
                 {this.props.children && React.cloneElement(this.props.children, {
-                    postsObj: this.state.postsObj,
-                    commentsObj: this.state.commentsObj
+                    posts: this.state.posts,
+                    comments: this.state.comments,
+                    handlers : this.handlers
                 })}
             </div>
         )

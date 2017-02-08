@@ -23,9 +23,10 @@ describe("<Photogrid />", () => {
         }
     ];
 
-    let wrapper;
+    const handlers = [];
+
     it("should contain same number of <Photo /> component as number of photo", () => {
-        wrapper = shallow(<Photogrid posts={posts}/>);
+        let wrapper = shallow(<Photogrid posts={posts} handlers={handlers}/>);
         expect(wrapper.find(Photo)).to.have.length(posts.length);
     })
 })

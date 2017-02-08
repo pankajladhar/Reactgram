@@ -8,13 +8,13 @@ class Photogrid extends React.Component {
     };
 
     _renderDOM() {
-        var { posts, likeBtnHandler } = this.props.postsObj;
+        let { posts,comments, handlers } = this.props;
         return (posts.map((post, i) =>{
             return <Photo
                 key={i}
                 post={post}
-                commentsObj={this.props.commentsObj}
-                likeBtnHandler={likeBtnHandler}/>
+                comments={comments}
+                likeBtnHandler={handlers.likeBtnHandler}/>
         }));
     }
 

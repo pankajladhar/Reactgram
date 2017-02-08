@@ -20,7 +20,6 @@ class Comment extends React.Component{
 
 
     render(){
-        console.log("ddd",this.props)
         return(
             <div className="comment">
                 {this.props.userComments.map((userComment, i)=>{

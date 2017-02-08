@@ -14,7 +14,7 @@ class Photo extends React.Component{
     }
 
     render(){
-        const { post, commentsObj } = this.props;
+        const { post, comments } = this.props;
         return(
             <figure className="grid-figure">
                 <div className="grid-photo-warp">
@@ -38,7 +38,7 @@ class Photo extends React.Component{
                         <Link className="button" to={`/view/${post.code}`}>
                             <span className="comment-count">
                                 <span className="speech-bubble"></span>
-                                {commentsObj.comments[post.code] ? commentsObj.comments[post.code].length : 0}
+                                {comments[post.code] ? comments[post.code].length : 0}
                             </span>
                         </Link>
                     </div>

@@ -10,25 +10,23 @@ class Single extends React.Component {
     render() {
 
         const {postId} = this.props.params;
-        const {posts, likeBtnHandler} = this.props.postsObj;
+        let { posts,comments, handlers } = this.props;
+
         let i = posts.findIndex((post) => post.code === postId);
-        let post = posts[i];
-
-        let comment = this.props.commentsObj.comments[postId] || [];
-
-        const {removeComment, addComment} = this.props.commentsObj;
+        let post = i > -1 && posts[i];
+        let comment = comments[postId] || [];
 
         return (
             <div className="single-photo">
                 <Photo
                     post={post}
-                    likeBtnHandler={likeBtnHandler}
-                    commentsObj={this.props.commentsObj}
+                    likeBtnHandler={handlers.likeBtnHandler}
+                    comments={comments}
                 />
                 <Comment
                     userComments={comment}
-                    removeComment={removeComment}
-                    addComment={ addComment}
+                    removeComment={handlers.removeComment}
+                    addComment={ handlers.addComment}
                     postId={postId}
                 />
             </div>
