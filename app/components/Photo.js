@@ -20,7 +20,7 @@ class Photo extends React.Component{
                 <div className="grid-photo-warp">
                     <Link to={`/view/${post.code}`}>
                         <img
-                            src={"../images/"+ post.display_src}
+                            src={"images/"+ post.display_src}
                             alt={post.caption} className="grid-photo"/>
                     </Link>
                 </div>
