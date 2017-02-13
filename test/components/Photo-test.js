@@ -1,5 +1,6 @@
 import React from 'react';
 import {expect} from 'chai';
+import _ from 'lodash';
 import sinon from 'sinon';
 import {shallow, mount, render} from 'enzyme';
 import Photo from '../../app/components/Photo';
@@ -15,9 +16,6 @@ describe("<Photo />", () =>{
         "display_src": "12552326_495932673919321_1443393332_n.jpg"
     }
 
-    const handlers = [
-        {likeBtnHandler: ()=>{}}
-    ];
     const comments = {
         "BAhvZrRwcfu":[
             {
@@ -38,9 +36,11 @@ describe("<Photo />", () =>{
     }
     let wrapper;
 
+    const likeBtnHandlerStub = sinon.spy();
+
 
     it("should have one figure tag", () =>{
-        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={handlers.likeBtnHandler}/>)
+        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={likeBtnHandlerStub}/>)
 
         expect(wrapper.type()).to.equal('figure');
         expect(wrapper.find('figure')).to.have.length(1);
@@ -48,7 +48,7 @@ describe("<Photo />", () =>{
 
 
     it("should render proper UI elements tag under figure", () =>{
-        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={handlers.likeBtnHandler}/>)
+        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={likeBtnHandlerStub}/>)
 
 
         const div = wrapper.find('figure').childAt(0);
@@ -64,7 +64,7 @@ describe("<Photo />", () =>{
     });
 
     it("should render image with link in div under figure tag", () =>{
-        wrapper = mount(<Photo post={post} comments={comments} likeBtnHandler={handlers.likeBtnHandler}/>);
+        wrapper = mount(<Photo post={post} comments={comments} likeBtnHandler={likeBtnHandlerStub}/>);
         const div = wrapper.find('figure').childAt(0);
 
         const anchor = div.childAt(0);
@@ -76,18 +76,34 @@ describe("<Photo />", () =>{
     });
 
     it("should render caption and control button under figcaption tag", () =>{
-        wrapper = mount(<Photo post={post} comments={comments} likeBtnHandler={handlers.likeBtnHandler}/>);
+        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={likeBtnHandlerStub}/>);
         const figCaption = wrapper.find('figure').childAt(2);
         expect(figCaption.find("p")).to.have.length(1);
         expect(figCaption.find("p").text()).to.equal(post.caption);
 
 
-        /*const onButtonClick = sinon.spy()
-        expect(figCaption.find("button")).to.have.length(1);
-        figCaption.find("button").simulate('click');
-        expect(onButtonClick.calledOnce).to.equal(true);*/
+        const likebtn = figCaption.find("button");
+        expect(likebtn).to.have.length(1);
+        expect(_.isFunction(likebtn.props().onClick)).to.equal(true)
 
-    })
+
+        const clickHandlerStub = sinon.spy();
+        likebtn.simulate('click', {preventDefault: () => {}});
+        expect(likeBtnHandlerStub.calledWith(post)).to.equal(true);
+        sinon.assert.calledWith(likeBtnHandlerStub, post);
+
+    });
+
+    it("should render no of comments under link tag", ()=>{
+        wrapper = shallow(<Photo post={post} comments={comments} likeBtnHandler={likeBtnHandlerStub}/>);
+        const figCaption = wrapper.find('figure').childAt(2);
+        const Link = figCaption.find("Link");
+        expect(Link).to.have.length(1);
+        expect(Link.props().to).to.equals("/view/BAcyDyQwcXX");
+
+        const spancommentcount = Link.find("span.comment-count");
+        expect(spancommentcount.text()).to.have.equal("2");
+    });
 
 
 
