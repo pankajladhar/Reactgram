@@ -15,14 +15,8 @@ describe("<Comment />", () => {
             removeComment: () => { },
             addComment: () => { }
         },
-        userComments: {
-            "BAhvZrRwcfu": [
-                {
-                    "text": "Totally need to try this.",
-                    "user": "heavymetaladam"
-                }
-            ],
-            "BAcyDyQwcXX": [
+        userComments:
+            [
                 {
                     "text": "Wes. WE should have lunch.",
                     "user": "jdaveknox"
@@ -32,7 +26,6 @@ describe("<Comment />", () => {
                     "user": "jdaveknox"
                 }
             ]
-        }
 
     }
 
@@ -44,9 +37,16 @@ describe("<Comment />", () => {
     })
 
     it("should have one div with class comment containing form and comments", ()=> {
-        let div = wrapper.find("div");
-        expect(div.hasClass("comment")).to.be.equal(true);
-        expect(div.find("form")).to.have.length(1)
+        let div = wrapper.find("div.comment");
+        expect(div.find("form")).to.have.length(1);
+
+        var commentDiv = div.find("div.commentx");
+        expect(commentDiv).to.have.length(defaultProps.userComments.length);
+
+        expect(commentDiv.at(0).find("p").html()).to.be.equal('<p><strong>jdaveknox</strong>Wes. WE should have lunch.<button class="remove-comment">x</button></p>')
+        expect(commentDiv.at(1).find("p").html()).to.be.equal('<p><strong>jdaveknox</strong>#adults<button class="remove-comment">x</button></p>')
+
+        expect(commentDiv.at(0).find("button").hasClass("remove-comment")).to.be.equal(true)
 
         let inputs = div.find("form").find("input");
         expect(inputs).to.have.length(3);

@@ -22,7 +22,7 @@ class Comment extends React.Component {
         return (
             userComments.map((userComment, i)=> {
                 return (
-                    <div className="comment" key={i}>
+                    <div className="commentx" key={i}>
                         <p>
                             <strong>{userComment.user}</strong>{userComment.text}
                             <button className="remove-comment" onClick={this.clickaHandler.bind(null, i)}>x</button>
